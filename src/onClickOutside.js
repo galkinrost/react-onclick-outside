@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom'
 import hoist from 'hoist-non-react-statics'
 
 const onClickOutside = (handler = ()=>null) => {
-    const createOnClickHandler = (domNode) => (e) => {
+    const createOnClickHandler = (context) => (e) => {
+        const domNode = context.refs.wrapped
+
         if (!domNode || !domNode.contains(e.target)) {
-            handler()
+            handler(context.props)
         }
     }
 
@@ -13,7 +15,7 @@ const onClickOutside = (handler = ()=>null) => {
         class WithHandler extends Component {
 
             componentDidMount() {
-                this.onClickHandler = createOnClickHandler(this.refs.wrapped)
+                this.onClickHandler = createOnClickHandler(this)
                 document.addEventListener(`click`, this.onClickHandler, true)
             }
 

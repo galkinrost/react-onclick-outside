@@ -19,16 +19,6 @@ describe(`react-onclick-outside`, () => {
         return event
     }
 
-    class Wrapper extends Component {
-        render() {
-            return (
-                <div ref="wrapper">
-                    {this.props.children}
-                </div>
-            )
-        }
-    }
-
     beforeEach(() => {
         mountNode = document.createElement('div')
         document.body.appendChild(mountNode)
@@ -66,16 +56,24 @@ describe(`react-onclick-outside`, () => {
 
         Wrapped = onClickOutside(handler)(Wrapped)
 
+        class Wrapper extends Component {
+            render() {
+                return (
+                    <div ref="wrapper">
+                        <Wrapped foo="bar"/>
+                    </div>
+                )
+            }
+        }
+
         const tree = ReactDOM.render(
-            <Wrapper>
-                <Wrapped/>
-            </Wrapper>,
+            <Wrapper/>,
             mountNode
         )
 
         simulateClick(tree.refs.wrapper)
 
-        expect(handler.calledOnce).toBeTruthy()
+        expect(handler.withArgs({foo: 'bar'}).calledOnce).toBeTruthy()
     })
 
     it(`should not call handler after component will unmount`, () => {
