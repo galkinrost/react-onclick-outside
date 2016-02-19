@@ -8,7 +8,7 @@ On click outside the component decorator
 npm install --save react-onclick-decorator
 ```
 
-## onClicOutside
+## onClickOutside
 
 ```javascript
 ...
