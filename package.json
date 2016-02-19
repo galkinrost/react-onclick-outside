@@ -1,6 +1,6 @@
 {
   "name": "react-onclick-outside",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "On click outside the component decorator",
   "files": [
     "dist",
