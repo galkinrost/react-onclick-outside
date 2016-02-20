@@ -5,7 +5,7 @@ On click outside the component decorator
 ## Installation
 
 ```bash
-npm install --save react-onclick-decorator
+npm install --save react-onclick-outside
 ```
 
 ## onClickOutside
