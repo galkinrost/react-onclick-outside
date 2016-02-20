@@ -8,6 +8,18 @@ On click outside the component decorator
 npm install --save react-onclick-decorator
 ```
 
+## onClickOutside
+
+```javascript
+...
+import onClickOutside from 'react-onclick-outside'
+
+const Component = () => (...)
+
+onClickOutside( props => props.action() )(Component)
+```
+
+
 ## Example
 
 ```javascript
