@@ -1,13 +1,10 @@
 import React, {Component} from 'react'
-import ReactDOM from 'react-dom'
 import hoist from 'hoist-non-react-statics'
 
-const onClickOutside = (handler = ()=>null) => {
-    const createOnClickHandler = (context) => (e) => {
-        const domNode = context.refs.wrapped
-
-        if (!domNode || !domNode.contains(e.target)) {
-            handler(context.props)
+const onClickOutside = (handler = () => null) => {
+    const createOnClickHandler = (instance) => (e) => {
+        if (!instance.ref || !instance.ref.contains(e.target)) {
+            handler(instance.props)
         }
     }
 
@@ -26,7 +23,10 @@ const onClickOutside = (handler = ()=>null) => {
 
             render() {
                 return (
-                    <div ref="wrapped" >
+                    <div ref={ref => {
+                        this.ref = ref
+                    }}
+                    >
                         <Wrapped{...this.props}/>
                     </div>
                 )

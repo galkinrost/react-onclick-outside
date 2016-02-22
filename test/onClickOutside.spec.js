@@ -1,11 +1,10 @@
-import expect from 'expect'
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
-import TestUtils from 'react-addons-test-utils'
-import jsdom from 'mocha-jsdom'
-import sinon from 'sinon'
 
+import expect from 'expect'
+import jsdom from 'mocha-jsdom'
 import onClickOutside from '../src/onClickOutside'
+import sinon from 'sinon'
 
 describe(`react-onclick-outside`, () => {
     jsdom()
@@ -20,18 +19,18 @@ describe(`react-onclick-outside`, () => {
     }
 
     beforeEach(() => {
-        mountNode = document.createElement('div')
+        mountNode = document.createElement(`div`)
         document.body.appendChild(mountNode)
     })
 
     afterEach(() => {
         ReactDOM.unmountComponentAtNode(mountNode)
-    });
+    })
 
     it(`should not call handler on click for wrapped component`, () => {
         const handler = sinon.stub()
 
-        let Wrapped = () =>(
+        let Wrapped = () => (
             <div/>
         )
 
@@ -42,7 +41,7 @@ describe(`react-onclick-outside`, () => {
             mountNode
         )
 
-        simulateClick(tree.refs.wrapped)
+        simulateClick(tree.ref)
 
         expect(handler.calledOnce).toBeFalsy()
     })
@@ -50,7 +49,7 @@ describe(`react-onclick-outside`, () => {
     it(`should call handler on click outside the component`, () => {
         const handler = sinon.stub()
 
-        let Wrapped = () =>(
+        let Wrapped = () => (
             <div/>
         )
 
@@ -59,7 +58,10 @@ describe(`react-onclick-outside`, () => {
         class Wrapper extends Component {
             render() {
                 return (
-                    <div ref="wrapper">
+                    <div ref={ref => {
+                        this.ref = ref
+                    }}
+                    >
                         <Wrapped foo="bar"/>
                     </div>
                 )
@@ -71,15 +73,15 @@ describe(`react-onclick-outside`, () => {
             mountNode
         )
 
-        simulateClick(tree.refs.wrapper)
+        simulateClick(tree.ref)
 
-        expect(handler.withArgs({foo: 'bar'}).calledOnce).toBeTruthy()
+        expect(handler.withArgs({foo: `bar`}).calledOnce).toBeTruthy()
     })
 
     it(`should not call handler after component will unmount`, () => {
         const handler = sinon.stub()
 
-        let Wrapped = () =>(
+        let Wrapped = () => (
             <div/>
         )
 
@@ -97,4 +99,4 @@ describe(`react-onclick-outside`, () => {
 
         expect(handler.calledOnce).toBeFalsy()
     })
-});
+})
