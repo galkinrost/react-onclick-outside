@@ -1,4 +1,4 @@
-# React onclick outside
+# React onclick outside [![Build Status](https://travis-ci.org/babotech/react-onclick-outside.svg?branch=master)](https://travis-ci.org/babotech/react-onclick-outside)
 
 On click outside the component decorator
 
